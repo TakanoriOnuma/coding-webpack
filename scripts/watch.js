@@ -10,6 +10,22 @@ const AUTO_COMMENT_STR = [
 ].join('\n');
 
 /**
+ * pugファイル名を受け取ってimportする文を書く
+ * @param {string} pugFileName - pugファイル名
+ * @returns {string} - import文
+ */
+function getImportStr(pugFileName) {
+  return 'import '
+    + `'`
+    + '!file-loader?' + JSON.stringify({ name: '[name].html '})
+    + '!extract-loader'
+    + '!html-loader'
+    + '!pug-html-loader?' + JSON.stringify({ pretty: true, data: { data: 10 }})
+    + `!../pug/${pugFileName}`
+    + `';`;
+}
+
+/**
  * pugファイルのimport文を書く
  * @param {string} dirPath - 監視対象のディレクトリパス
  */
@@ -21,7 +37,7 @@ function _autoImportPugFiles(dirPath) {
     const codeStr = [
       AUTO_COMMENT_STR,
       '',
-      pugFiles.map((pugFile) => `import '../pug/${pugFile}'`).join('\n'),
+      pugFiles.map((pugFile) => getImportStr(pugFile)).join('\n'),
       ''
     ].join('\n');
 

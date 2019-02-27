@@ -1,2 +1,2 @@
 require('./server');
-// require('./watch');
+require('./watch');
