@@ -18,7 +18,7 @@ module.exports = {
       //   loader: 'eslint-loader'
       // },
       {
-        test: /\.(js)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
@@ -60,7 +60,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js', '.jsx']
   },
   plugins: [
     // new webpack.ProvidePlugin({

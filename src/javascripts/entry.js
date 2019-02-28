@@ -1,6 +1,9 @@
 import './pugImport';
 import '../css/base.scss';
 
+// reactのエントリーポイント
+import './react/reactEntry';
+
 console.log('test');
 
 // HMRに失敗してもJSがリロードしてくれないので強制的にリロードを実行する

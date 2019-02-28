@@ -13,6 +13,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
     "autoprefixer": "^9.4.7",
     "babel-loader": "^8.0.5",
     "babel-plugin-lodash": "^3.3.4",
@@ -30,6 +31,7 @@
     "postcss": "^7.0.14",
     "postcss-loader": "^3.0.0",
     "pug-html-loader": "^1.1.5",
+    "react-hot-loader": "^4.7.1",
     "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
     "webpack": "^4.29.2",
@@ -40,6 +42,8 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "react": "15",
+    "react-dom": "15",
     "reset-css": "^4.0.1"
   }
 }
