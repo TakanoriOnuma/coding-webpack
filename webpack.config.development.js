@@ -39,50 +39,63 @@ for (const key in config.entry) {
   }
 }
 
-config.module.rules.push({
-  test: /\.(sass|scss)$/,
-  use: [
-    'css-hot-loader',
-    MiniCssExtractPlugin.loader,
-    {
-      loader: 'css-loader',
-      options: {
-        sourceMap: true,
-        // 0 => no loaders (default);
-        // 1 => postcss-loader;
-        // 2 => postcss-loader, sass-loader
-        importLoaders: 2
+/**
+ * CSSのルール設定を取得する
+ * @param {string} cssModulePath - CSSモジュールのパス
+ * @returns {Array<Object>} - CSSモジュールとそうでない場合のルール設定
+ */
+function getCssRules(cssModulePath) {
+  return [true, false].map((isCssModule) => ({
+    test: /\.(sass|scss)$/,
+    include: isCssModule ? cssModulePath : undefined,
+    exclude: isCssModule ? undefined : cssModulePath,
+    use: [
+      'css-hot-loader',
+      MiniCssExtractPlugin.loader,
+      {
+        loader: 'css-loader',
+        options: {
+          sourceMap: true,
+          modules: isCssModule,
+          localIdentName: '[name]-[local]-[hash:base64:5]',
+          // 0 => no loaders (default);
+          // 1 => postcss-loader;
+          // 2 => postcss-loader, sass-loader
+          importLoaders: 2
+        }
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: true,
+          plugins: (loader) => [
+            autoprefixer({
+              browsers: [
+                'last 2 version',
+                'IE 11'
+              ]
+            }),
+            // new IconfontWebpackPlugin(loader)
+          ]
+        }
+      },
+      {
+        loader: 'sass-loader',
+        options: {
+          sourceMap: true
+        }
+      },
+      {
+        loader: 'sass-resources-loader',
+        options: {
+          sourceMap: true,
+          resources: [path.resolve('./src/css/resources/*.scss')]
+        }
       }
-    },
-    {
-      loader: 'postcss-loader',
-      options: {
-        sourceMap: true,
-        plugins: [
-          autoprefixer({
-            browsers: [
-              'last 2 version',
-              'IE 11'
-            ]
-          })
-        ]
-      }
-    },
-    {
-      loader: 'sass-loader',
-      options: {
-        sourceMap: true,
-        includePaths: [path.resolve('./node_modules/')]
-      }
-    },
-    // {
-    //   loader: 'sass-resources-loader',
-    //   options: {
-    //     sourceMap: true,
-    //     resources: [path.resolve('./src/css/resources/*.scss')]
-    //   }
-    // }
-  ]
-});
+    ]
+  }));
+}
+
+config.module.rules.push(...getCssRules(path.resolve(__dirname, './src/javascripts/')));
 
 module.exports = config;

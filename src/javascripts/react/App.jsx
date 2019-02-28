@@ -1,10 +1,15 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
 
+import MyComponent from './components/MyComponent';
+
 class App extends React.Component {
   render() {
     return (
-      <div>Hello, World!</div>
+      <div>
+        <div>Hello, World!</div>
+        <MyComponent/>
+      </div>
     );
   }
 }
